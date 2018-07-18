@@ -6,16 +6,18 @@ contract MoneyPool {
         uint value;
         address recipient;
         bool complete;
+        uint approvalCount;
+        mapping(address => bool) approvals;
     }
     
     Request[] public requests;
     address public manager;
     uint public minimumContribution;
-    address[] public approvers;
+    mapping(address => bool) public approvers;
     
     modifier restricted() {
-        require(msg.sender == manager)
-        _;  // Code executes here
+        require(msg.sender == manager);
+        _;  
     }
     
     // Constructor
@@ -28,7 +30,7 @@ contract MoneyPool {
     function contribute() public payable {
         require(msg.value > minimumContribution);
         
-        approvers.push(msg.sender);
+        approvers[msg.sender] = true;
     }
     
     function createRequest(string description, uint value, address recipient) public restricted {
@@ -36,11 +38,22 @@ contract MoneyPool {
             description: description,
             value: value,
             recipient: recipient,
-            complete: false
+            complete: false,
+            approvalCount: 0
         });
         
-        request.push(newRequest);
+        requests.push(newRequest);
     }
     
+    function approveRequest(uint index) public {
+        Request storage request = requests[index];
+        
+        require(approvers[msg.sender]);
+        require(!request.approvals[msg.sender]);    //person not already voted on request
+        
+        request.approvals[msg.sender] = true;
+        request.approvalCount++;
+        
+    }
     
 }
