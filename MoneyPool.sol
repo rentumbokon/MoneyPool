@@ -1,6 +1,17 @@
+/*
+1) Manager deploy with 0 min contributer
+2) Manager contribute some amount
+3) Manager create request with new address (recipient)
+4) Manager/contributer approve request 
+5) Manager finalize request
+6) Recipient should have more eth
+*/ 
+
+
 pragma solidity ^0.4.17;
 
 contract MoneyPool {
+    // Request - Where money want to go
     struct Request {
         string description;
         uint value;
@@ -14,6 +25,7 @@ contract MoneyPool {
     address public manager;
     uint public minimumContribution;
     mapping(address => bool) public approvers;
+    uint public approversCount;
     
     modifier restricted() {
         require(msg.sender == manager);
@@ -26,13 +38,15 @@ contract MoneyPool {
         minimumContribution = minimum; 
     }
     
-    // Add to money pool
+    // Anyone be contributer 
     function contribute() public payable {
         require(msg.value > minimumContribution);
         
         approvers[msg.sender] = true;
+        approversCount++;
     }
     
+    // Manager create request 
     function createRequest(string description, uint value, address recipient) public restricted {
         Request memory newRequest = Request({   // memory - pass/copy by value
             description: description,
@@ -45,6 +59,7 @@ contract MoneyPool {
         requests.push(newRequest);
     }
     
+    // Contributer approve request at given index
     function approveRequest(uint index) public {
         Request storage request = requests[index];
         
@@ -56,4 +71,12 @@ contract MoneyPool {
         
     }
     
+    // Manager give eth to recipient if approval is majority
+    function finalizeRequest(uint index) public restricted {
+        Request storage request = requests[index];
+        require(request.approvalCount > (approversCount/2));
+        require(!requests[index].complete);
+        request.recipient.transfer(request.value);
+        request.complete = true;
+    }
 }
