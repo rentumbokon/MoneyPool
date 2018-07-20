@@ -10,6 +10,21 @@
 
 pragma solidity ^0.4.17;
 
+contract MoneyPoolFactory {
+    // Factory Contract creates instances of many contracts
+    address[] public deployedMoneyPools;
+    
+    function createMoneyPool(uint minimum) public {
+        address newMoneyPool = new MoneyPool(minimum, msg.sender); // user trying to make new MoneyPool
+        deployedMoneyPools.push(newMoneyPool);
+    }
+    
+    function getMoneyPools() public view returns (address[]) {
+        return deployedMoneyPools;
+    }
+
+}
+
 contract MoneyPool {
     // Request - Where money want to go
     struct Request {
@@ -33,8 +48,8 @@ contract MoneyPool {
     }
     
     // Constructor
-    function MoneyPool(uint minimum) public {
-        manager = msg.sender;
+    function MoneyPool(uint minimum, address creator) public {
+        manager = creator;
         minimumContribution = minimum; 
     }
     
