@@ -63,4 +63,41 @@ describe('MoneyPools', () => {
 			assert(err);
 		}
 	});
+
+	it('allows a manager to make a payment request', async () => {
+		await moneyPool.methods
+			.createRequest('Buy batteries', 100, accounts[1])
+			.send({
+				from: accounts[0],
+				gas: '1000000'
+			});
+			const request = await moneyPool.methods.requests(0).call();
+			assert.equal('Buy batteries', request.description);
+	});
+
+	it('create request, aprove request, finalize request (e2e)', async () => {
+		await moneyPool.methods.contribute().send({
+			from: accounts[0],
+			value: web3.utils.toWei('10','ether')
+		});
+		await moneyPool.methods
+			.createRequest('test desc', web3.utils.toWei('5','ether'), accounts[1])
+			.send({ from: accounts[0], gas: '1000000' });
+
+		await moneyPool.methods.approveRequest(0).send({
+			from: accounts[0],
+			gas: '1000000'
+		});
+
+		await moneyPool.methods.finalizeRequest(0).send({
+			from: accounts[0],
+			gas: '1000000'
+		});
+
+		let balance = await web3.eth.getBalance(accounts[1]);
+		balance = web3.utils.fromWei(balance, 'ether');
+		balance = parseFloat(balance);
+
+		assert(balance > 104); // hard coded with ganache inital balance of 100 eth
+	});
 });
