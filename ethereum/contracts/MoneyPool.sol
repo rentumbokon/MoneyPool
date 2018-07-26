@@ -19,7 +19,7 @@ contract MoneyPoolFactory {
         deployedMoneyPools.push(newMoneyPool);
     }
     
-    function getDeployedMoneyPools() public view returns (address[]) {
+    function getDeployedMoneyPools() public view returns (address[]){
         return deployedMoneyPools;
     }
 
