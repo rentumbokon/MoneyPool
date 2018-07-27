@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import factory from '../ethereum/factory'
 
 class MoneyPoolIndex extends Component {
-	async componentDidMount() {
+	static async getInitialProps() {	// lifecycle method
 		const moneyPools = await factory.methods.getDeployedMoneyPools().call();
-		console.log(moneyPools); //debug
+
+		return { moneyPools: moneyPools }		
 	}
 
 	render() {	// req
-		return <div>MoneyPool Index!</div>;
+		return <div>{this.props.moneyPools[0]}</div>;
 	}
 }
 
