@@ -36,6 +36,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _semanticUiReact = require('semantic-ui-react');
+
 var _factory = require('../ethereum/factory');
 
 var _factory2 = _interopRequireDefault(_factory);
@@ -55,15 +57,50 @@ var MoneyPoolIndex = function (_Component) {
 	}
 
 	(0, _createClass3.default)(MoneyPoolIndex, [{
+		key: 'renderMoneyPools',
+		value: function renderMoneyPools() {
+			// generate components using data from props
+			var items = this.props.moneyPools.map(function (address) {
+				return {
+					header: address,
+					description: _react2.default.createElement('a', {
+						__source: {
+							fileName: _jsxFileName,
+							lineNumber: 15
+						}
+					}, 'View Money Pool'),
+					fluid: true
+				};
+			});
+
+			return _react2.default.createElement(_semanticUiReact.Card.Group, { items: items, __source: {
+					fileName: _jsxFileName,
+					lineNumber: 20
+				}
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
 			// req
 			return _react2.default.createElement('div', {
 				__source: {
 					fileName: _jsxFileName,
-					lineNumber: 12
+					lineNumber: 25
 				}
-			}, this.props.moneyPools[0]);
+			}, _react2.default.createElement('link', { rel: 'stylesheet', href: '//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css', __source: {
+					fileName: _jsxFileName,
+					lineNumber: 26
+				}
+			}), this.renderMoneyPools(), _react2.default.createElement(_semanticUiReact.Button, {
+				content: 'Create Money Pool',
+				icon: 'add',
+				primary: true,
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 28
+				}
+			}));
 		}
 	}], [{
 		key: 'getInitialProps',
@@ -101,4 +138,4 @@ var MoneyPoolIndex = function (_Component) {
 }(_react.Component);
 
 exports.default = MoneyPoolIndex;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkNvbXBvbmVudCIsImZhY3RvcnkiLCJNb25leVBvb2xJbmRleCIsInByb3BzIiwibW9uZXlQb29scyIsIm1ldGhvZHMiLCJnZXREZXBsb3llZE1vbmV5UG9vbHMiLCJjYWxsIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsQUFBTyxBQUFTOzs7O0FBQ2hCLEFBQU8sQUFBYTs7Ozs7Ozs7O0lBRWQsQTs7Ozs7Ozs7Ozs7MkJBT0ksQUFBRTtBQUNWOzBCQUFPLGNBQUE7O2VBQUE7aUJBQUEsQUFBTTtBQUFOO0FBQUEsSUFBQSxPQUFNLEFBQUssTUFBTCxBQUFXLFdBQXhCLEFBQU8sQUFBTSxBQUFzQixBQUNuQzs7Ozs7Ozs7Ozs7O2VBUHlCLGtCQUFBLEFBQVEsUUFBUixBQUFnQix3QkFBaEIsQUFBd0MsQTs7WUFBM0Q7QTt5Q0FFQyxFQUFFLFlBQUYsQUFBYyxBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSk0sQSxBQWE3Qjs7a0JBQUEsQUFBZSIsImZpbGUiOiJpbmRleC5qcz9lbnRyeSIsInNvdXJjZVJvb3QiOiJDOi9Vc2Vycy9SZW5hcmQvRHJvcGJveC9Qcm9ncmFtbWluZy9Nb25leVBvb2wifQ==
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkNvbXBvbmVudCIsIkNhcmQiLCJCdXR0b24iLCJmYWN0b3J5IiwiTW9uZXlQb29sSW5kZXgiLCJpdGVtcyIsInByb3BzIiwibW9uZXlQb29scyIsIm1hcCIsImhlYWRlciIsImFkZHJlc3MiLCJkZXNjcmlwdGlvbiIsImZsdWlkIiwicmVuZGVyTW9uZXlQb29scyIsIm1ldGhvZHMiLCJnZXREZXBsb3llZE1vbmV5UG9vbHMiLCJjYWxsIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsQUFBTyxBQUFTOzs7O0FBQ2hCLEFBQVMsQUFBTTs7QUFDZixBQUFPLEFBQWE7Ozs7Ozs7OztJLEFBRWQ7Ozs7Ozs7Ozs7O3FDQU1hLEFBQUc7QUFDcEI7T0FBTSxhQUFRLEFBQUssTUFBTCxBQUFXLFdBQVgsQUFBc0IsSUFBSSxtQkFBVyxBQUNsRDs7YUFBTyxBQUNFLEFBQ1I7a0NBQWEsY0FBQTs7aUJBQUE7bUJBQUE7QUFBQTtBQUFBLE1BQUEsRUFGUCxBQUVPLEFBQ2I7WUFIRCxBQUFPLEFBR0MsQUFFUjtBQUxPLEFBQ047QUFGRixBQUFjLEFBUWQsSUFSYzs7d0NBUVAsQUFBQyxzQkFBRCxBQUFNLFNBQU0sT0FBWixBQUFtQjtlQUFuQjtpQkFBUCxBQUFPLEFBQ1A7QUFETztJQUFBOzs7OzJCQUdDLEFBQUU7QUFDVjswQkFDQyxjQUFBOztlQUFBO2lCQUFBLEFBQ0E7QUFEQTtBQUFBLElBQUEsMENBQ00sS0FBTixBQUFVLGNBQWEsTUFBdkIsQUFBNEI7ZUFBNUI7aUJBREEsQUFDQSxBQUNDO0FBREQ7WUFEQSxBQUVDLEFBQUssQUFDTixvQ0FBQSxBQUFDO2FBQUQsQUFDUyxBQUNSO1VBRkQsQUFFTSxBQUNMO2FBSEQ7O2VBQUE7aUJBSkQsQUFDQyxBQUdBLEFBT0Q7QUFQQztBQUNDOzs7Ozs7Ozs7Ozs7ZUF0QnVCLGtCQUFBLEFBQVEsUUFBUixBQUFnQix3QkFBaEIsQUFBd0MsQTs7WUFBM0Q7QTt5Q0FDQyxFQUFFLFlBQUYsQUFBYyxBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBSE0sQSxBQWlDN0I7O2tCQUFBLEFBQWUiLCJmaWxlIjoiaW5kZXguanM/ZW50cnkiLCJzb3VyY2VSb290IjoiQzovVXNlcnMvUmVuYXJkL0Ryb3Bib3gvUHJvZ3JhbW1pbmcvTW9uZXlQb29sIn0=
