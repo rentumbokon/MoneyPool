@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import factory from '../ethereum/factory'
 import Layout from '../components/Layout'
+import { Link } from '../routes';
 
 class MoneyPoolIndex extends Component {
 	static async getInitialProps() {	// lifecycle method: get all data req
@@ -13,7 +14,11 @@ class MoneyPoolIndex extends Component {
 		const items = this.props.moneyPools.map(address => {
 			return {
 				header: address,
-				description: <a>View Money Pool</a>,	
+				description: (
+					<Link route={`/moneypools/${address}`}>
+						<a>View Money Pool</a>
+					</Link>
+				),	
 				fluid: true
 			};
 		});
@@ -26,12 +31,18 @@ class MoneyPoolIndex extends Component {
 			<Layout>
 				<div>
 				<h3>Open Money Pools</h3>
-				<Button
-					floated="right"
-					content="Create Money Pool" 
-					icon="add" 
-					primary
-				/>
+
+				<Link route="/moneypools/new">
+					<a>
+						<Button
+							floated="right"
+							content="Create Money Pool" 
+							icon="add" 
+							primary
+						/>
+					</a>
+				</Link>
+
 				{this.renderMoneyPools()}
 				</div>
 			</Layout>

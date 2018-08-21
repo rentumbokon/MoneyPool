@@ -1,23 +1,35 @@
 import React, { Component } from 'react';
-import { Form, Button, Input } from 'semantic-ui-react';
+import { Form, Button, Input, Message } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
+import { Router } from '../../routes';
 
 class MoneyPoolNew extends Component {
-	state = {
-		minimumContribution: ''
+	state = {	// json for rendering
+		minimumContribution: '',
+		errorMessage: '',
+		loading: false
 	};
 
 	onSubmit = async (event) => {
 		event.preventDefault();		// keep browser from submitting form to backend
+		this.setState({ loading: true, errorMessage: '' })
 
-		const accounts = await web3.eth.getAccounts();
-		await factory.methods
-			.createMoneyPool(this.state.minimumContribution)
-			.send({
-				from: accounts[0]
-			});
+		try {
+			const accounts = await web3.eth.getAccounts();
+			await factory.methods
+				.createMoneyPool(this.state.minimumContribution)
+				.send({
+					from: accounts[0]
+				});
+
+				Router.pushRoute('/');
+		} catch (err) {
+			this.setState({ errorMessage: err.message })
+		}
+
+		this.setState({ loading: false });
 	};
 
 	render () {
@@ -25,7 +37,7 @@ class MoneyPoolNew extends Component {
 			<Layout>
 				<h1>Create Money Pool</h1>
 
-				<Form onSubmit={this.onSubmit}>
+				<Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
 					<Form.Field>
 						<label>Minimum Contribution</label>
 						<Input 
@@ -36,7 +48,9 @@ class MoneyPoolNew extends Component {
 								this.setState({ minimumContribution: event.target.value })}
 						/>
 					</Form.Field>
-					<Button primary>Create</Button>
+
+					<Message error header="Oops!" content={this.state.errorMessage} />
+					<Button loading={this.state.loading} primary>Create</Button>
 				</Form>
 			</Layout>
 		);

@@ -5,7 +5,7 @@ import MoneyPoolFactory from './build/MoneyPoolFactory.json'
 
 const instance = new web3.eth.Contract(
 	JSON.parse(MoneyPoolFactory.interface),
-	'0x180d7987f23F054a8774Bc7aDF9e631CAC73dc98'
+	'0x5C8278125D11E765d6c66D21b83E5Dc93c70387e'
 );
 
 export default instance;
