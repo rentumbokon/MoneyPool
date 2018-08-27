@@ -36,6 +36,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _semanticUiReact = require('semantic-ui-react');
+
 var _Layout = require('../../components/Layout');
 
 var _Layout2 = _interopRequireDefault(_Layout);
@@ -43,6 +45,14 @@ var _Layout2 = _interopRequireDefault(_Layout);
 var _moneypool = require('../../ethereum/moneypool');
 
 var _moneypool2 = _interopRequireDefault(_moneypool);
+
+var _web = require('../../ethereum/web3');
+
+var _web2 = _interopRequireDefault(_web);
+
+var _ContributeForm = require('../../components/ContributeForm');
+
+var _ContributeForm2 = _interopRequireDefault(_ContributeForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59,14 +69,75 @@ var MoneyPoolShow = function (_Component) {
 	}
 
 	(0, _createClass3.default)(MoneyPoolShow, [{
+		key: 'renderCards',
+		value: function renderCards() {
+			var _props = this.props,
+			    balance = _props.balance,
+			    manager = _props.manager,
+			    minimumContribution = _props.minimumContribution,
+			    requestsCount = _props.requestsCount,
+			    approversCount = _props.approversCount;
+
+			var items = [{ // Manager
+				header: manager,
+				meta: 'Address of Manager',
+				description: 'The manager created this Money Pool and can create requests to withdraw money',
+				style: { overflowWrap: 'break-word' }
+			}, { // minimumContribution
+				header: minimumContribution,
+				meta: 'Minimum Contribution (wei)',
+				description: 'You must contribute at least this much wei to become an approver'
+			}, { // requestsCount
+				header: requestsCount,
+				meta: 'Number of Requests',
+				description: 'A request tries to withdraw money from the contract. Requests must be approved by the approvers'
+			}, { // approversCount
+				header: approversCount,
+				meta: 'Number of Approvers',
+				description: 'Number of people who have already donated to the Money Pool'
+			}, { // balance
+				header: _web2.default.utils.fromWei(balance, 'ether'),
+				meta: 'Money Pool Balance (eth)',
+				description: 'The balance is how much money this Money Pool has left to spend'
+			}];
+
+			return _react2.default.createElement(_semanticUiReact.Card.Group, { items: items, __source: {
+					fileName: _jsxFileName,
+					lineNumber: 64
+				}
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
-			return _react2.default.createElement('h3', {
+			return _react2.default.createElement(_Layout2.default, {
 				__source: {
 					fileName: _jsxFileName,
-					lineNumber: 24
+					lineNumber: 69
 				}
-			}, 'Money Pool Show');
+			}, _react2.default.createElement('h3', {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 70
+				}
+			}, 'Money Pool Show'), _react2.default.createElement(_semanticUiReact.Grid, {
+				__source: {
+					fileName: _jsxFileName,
+					lineNumber: 71
+				}
+			}, _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 10, __source: {
+					fileName: _jsxFileName,
+					lineNumber: 72
+				}
+			}, this.renderCards()), _react2.default.createElement(_semanticUiReact.Grid.Column, { width: 6, __source: {
+					fileName: _jsxFileName,
+					lineNumber: 76
+				}
+			}, _react2.default.createElement(_ContributeForm2.default, { address: this.props.address, __source: {
+					fileName: _jsxFileName,
+					lineNumber: 77
+				}
+			}))));
 		}
 	}], [{
 		key: 'getInitialProps',
@@ -88,6 +159,7 @@ var MoneyPoolShow = function (_Component) {
 								console.log(summary);
 
 								return _context.abrupt('return', {
+									address: props.query.address,
 									minimumContribution: summary[0],
 									balance: summary[1],
 									requestsCount: summary[2],
@@ -115,4 +187,4 @@ var MoneyPoolShow = function (_Component) {
 }(_react.Component);
 
 exports.default = MoneyPoolShow;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxtb25leXBvb2xzXFxzaG93LmpzIl0sIm5hbWVzIjpbIlJlYWN0IiwiQ29tcG9uZW50IiwiTGF5b3V0IiwiTW9uZXlQb29sIiwiTW9uZXlQb29sU2hvdyIsInByb3BzIiwicXVlcnkiLCJhZGRyZXNzIiwibW9uZXlwb29sIiwibWV0aG9kcyIsImdldFN1bW1hcnkiLCJjYWxsIiwic3VtbWFyeSIsImNvbnNvbGUiLCJsb2ciLCJtaW5pbXVtQ29udHJpYnV0aW9uIiwiYmFsYW5jZSIsInJlcXVlc3RzQ291bnQiLCJhcHByb3ZlcnNDb3VudCIsIm1hbmFnZXIiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxBQUFPLEFBQVM7Ozs7QUFDaEIsQUFBTyxBQUFZOzs7O0FBQ25CLEFBQU8sQUFBZTs7Ozs7Ozs7O0lBRWhCLEE7Ozs7Ozs7Ozs7OzJCQWlCSSxBQUNSOzBCQUNDLGNBQUE7O2VBQUE7aUJBQUE7QUFBQTtBQUFBLElBQUEsRUFERCxBQUNDLEFBRUQ7Ozs7O3dHQXBCNEIsQTs7Ozs7WUFDNUI7Y0FBQSxBQUFNLE1BQU4sQUFBWSxBQUNOO0Esb0JBQVkseUJBQVUsTUFBQSxBQUFNLE1BQWhCLEFBQXNCLEE7O2VBQ2xCLFVBQUEsQUFBVSxRQUFWLEFBQWtCLGFBQWxCLEFBQStCLEE7O1lBQS9DO0EsMkJBRU47O2dCQUFBLEFBQVEsSUFBUixBQUFZOzs7OEJBR1MsUUFEZixBQUNlLEFBQVEsQUFDNUI7a0JBQVMsUUFGSixBQUVJLEFBQVEsQUFDakI7d0JBQWUsUUFIVixBQUdVLEFBQVEsQUFDdkI7eUJBQWdCLFFBSlgsQUFJVyxBQUFRLEFBQ3hCO2tCQUFTLFFBQUEsQSxBQUxKLEFBS1k7QUFMWixBQUNMOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBVHlCLEEsQUF3QjVCOztrQkFBQSxBQUFlIiwiZmlsZSI6InNob3cuanM/ZW50cnkiLCJzb3VyY2VSb290IjoiQzovVXNlcnMvUmVuYXJkL0Ryb3Bib3gvUHJvZ3JhbW1pbmcvTW9uZXlQb29sIn0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxtb25leXBvb2xzXFxzaG93LmpzIl0sIm5hbWVzIjpbIlJlYWN0IiwiQ29tcG9uZW50IiwiQ2FyZCIsIkdyaWQiLCJMYXlvdXQiLCJNb25leVBvb2wiLCJ3ZWIzIiwiQ29udHJpYnV0ZUZvcm0iLCJNb25leVBvb2xTaG93IiwicHJvcHMiLCJiYWxhbmNlIiwibWFuYWdlciIsIm1pbmltdW1Db250cmlidXRpb24iLCJyZXF1ZXN0c0NvdW50IiwiYXBwcm92ZXJzQ291bnQiLCJpdGVtcyIsImhlYWRlciIsIm1ldGEiLCJkZXNjcmlwdGlvbiIsInN0eWxlIiwib3ZlcmZsb3dXcmFwIiwidXRpbHMiLCJmcm9tV2VpIiwicmVuZGVyQ2FyZHMiLCJhZGRyZXNzIiwicXVlcnkiLCJtb25leXBvb2wiLCJtZXRob2RzIiwiZ2V0U3VtbWFyeSIsImNhbGwiLCJzdW1tYXJ5IiwiY29uc29sZSIsImxvZyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU8sQUFBUzs7OztBQUNoQixBQUFTLEFBQU07O0FBQ2YsQUFBTyxBQUFZOzs7O0FBQ25CLEFBQU8sQUFBZTs7OztBQUN0QixBQUFPLEFBQVU7Ozs7QUFDakIsQUFBTyxBQUFvQjs7Ozs7Ozs7O0ksQUFFckI7Ozs7Ozs7Ozs7O2dDQWtCUztnQkFPVCxLQVBTLEFBT0o7T0FQSSxBQUVaLGlCQUZZLEFBRVo7T0FGWSxBQUdaLGlCQUhZLEFBR1o7T0FIWSxBQUlaLDZCQUpZLEFBSVo7T0FKWSxBQUtaLHVCQUxZLEFBS1o7T0FMWSxBQU1aLHdCQU5ZLEFBTVosQUFHRDs7T0FBTSxXQUNILEFBQ0Q7WUFERCxBQUNTLEFBQ1I7VUFGRCxBQUVPLEFBQ047aUJBSEQsQUFHYyxBQUNiO1dBQU8sRUFBRSxjQUxHLEFBQ2IsQUFJUSxBQUFnQjtBQUp4QixJQURhLElBT1gsQUFDRDtZQURELEFBQ1MsQUFDUjtVQUZELEFBRU8sQUFDTjtpQkFWWSxBQU9iLEFBR2M7QUFIZCxRQUtFLEFBQ0Q7WUFERCxBQUNTLEFBQ1I7VUFGRCxBQUVPLEFBQ047aUJBZlksQUFZYixBQUdjO0FBSGQsUUFLRSxBQUNEO1lBREQsQUFDUyxBQUNSO1VBRkQsQUFFTyxBQUNOO2lCQXBCWSxBQWlCYixBQUdjO0FBSGQsUUFLRSxBQUNEO1lBQVEsY0FBQSxBQUFLLE1BQUwsQUFBVyxRQUFYLEFBQW1CLFNBRDVCLEFBQ1MsQUFBNEIsQUFDcEM7VUFGRCxBQUVPLEFBQ047aUJBekJGLEFBQWMsQUFzQmIsQUFHYyxBQUlmO0FBUEM7O3dDQU9NLEFBQUMsc0JBQUQsQUFBTSxTQUFNLE9BQVosQUFBbUI7ZUFBbkI7aUJBQVAsQUFBTyxBQUNQO0FBRE87SUFBQTs7OzsyQkFHQyxBQUNSOzBCQUNDLEFBQUM7O2VBQUQ7aUJBQUEsQUFDQztBQUREO0FBQUEsSUFBQSxrQkFDQyxjQUFBOztlQUFBO2lCQUFBO0FBQUE7QUFBQSxNQURELEFBQ0MsQUFDQSxvQ0FBQSxBQUFDOztlQUFEO2lCQUFBLEFBQ0M7QUFERDtBQUFBLHNCQUNFLGNBQUQsc0JBQUEsQUFBTSxVQUFPLE9BQWIsQUFBb0I7ZUFBcEI7aUJBQUEsQUFDRTtBQURGO1dBREQsQUFDQyxBQUNFLEFBQUssQUFHUCxnQ0FBQyxjQUFELHNCQUFBLEFBQU0sVUFBTyxPQUFiLEFBQW9CO2VBQXBCO2lCQUFBLEFBQ0M7QUFERDtzQkFDQyxBQUFDLDBDQUFlLFNBQVMsS0FBQSxBQUFLLE1BQTlCLEFBQW9DO2VBQXBDO2lCQVRKLEFBQ0MsQUFFQyxBQUtDLEFBQ0MsQUFLSjtBQUxJOzs7Ozs7d0csQUFwRXdCOzs7OztZQUM1QjtjQUFBLEFBQU0sTUFBTixBQUFZLEFBQ047QSxvQkFBWSx5QkFBVSxNQUFBLEFBQU0sTUFBaEIsQUFBc0IsQTs7ZUFDbEIsVUFBQSxBQUFVLFFBQVYsQUFBa0IsYUFBbEIsQSxBQUErQjs7WUFBL0M7QSwyQkFFTjs7Z0JBQUEsQUFBUSxJQUFSLEFBQVk7OztrQkFHRixNQUFBLEFBQU0sTUFEVixBQUNnQixBQUNyQjs4QkFBb0IsUUFGZixBQUVlLEFBQVEsQUFDNUI7a0JBQVMsUUFISixBQUdJLEFBQVEsQUFDakI7d0JBQWUsUUFKVixBQUlVLEFBQVEsQUFDdkI7eUJBQWdCLFFBTFgsQUFLVyxBQUFRLEFBQ3hCO2tCQUFTLFFBTkosQUFNSSxBQUFRLEE7QUFOWixBQUNMOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBVHlCLEEsQUE2RTVCOztrQkFBQSxBQUFlIiwiZmlsZSI6InNob3cuanM/ZW50cnkiLCJzb3VyY2VSb290IjoiQzovVXNlcnMvUmVuYXJkL0Ryb3Bib3gvUHJvZ3JhbW1pbmcvTW9uZXlQb29sIn0=
