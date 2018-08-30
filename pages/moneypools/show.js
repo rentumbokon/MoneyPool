@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Grid } from 'semantic-ui-react';
+import { Card, Grid, Button } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import MoneyPool from '../../ethereum/moneypool';
 import web3 from '../../ethereum/web3';
 import ContributeForm from '../../components/ContributeForm';
+import { Link } from '../../routes';
 
 class MoneyPoolShow extends Component {
 	static async getInitialProps(props) {
@@ -69,13 +70,22 @@ class MoneyPoolShow extends Component {
 			<Layout>
 				<h3>Money Pool Show</h3>
 				<Grid>
-					<Grid.Column width={10}>
-						{this.renderCards()}
-					</Grid.Column>
+					<Grid.Row>
+						<Grid.Column width={10}>
+							{this.renderCards()}
+						</Grid.Column>
 
-					<Grid.Column width={6}>
-						<ContributeForm address={this.props.address} />
-					</Grid.Column>
+						<Grid.Column width={6}>
+							<ContributeForm address={this.props.address} />
+						</Grid.Column>
+					</Grid.Row>
+					<Grid.Row>
+						<Grid.Column>
+							<Link route={`/moneypools/${this.props.address}/requests`}>
+								<a><Button primary>View Requests</Button></a>
+							</Link>
+						</Grid.Column>
+					</Grid.Row>
 				</Grid>				
 			</Layout>
 		);
